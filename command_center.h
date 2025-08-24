@@ -6,22 +6,7 @@
 #include "drone.h"
 #include "swarm.h"
 
-// Estructura para el centro de comando
-typedef struct {
-    int id;
-    int activo;
-    int num_enjambres;
-    int num_camiones;
-    int num_blancos;
-    Enjambre* enjambres[MAX_ENJAMBRES];
-    Camion* camiones[MAX_DRONES];
-    Blanco* blancos[MAX_BLANCOS];
-    ServidorComunicacion* servidor;
-    pthread_mutex_t mutex_sistema;
-    pthread_t hilo_principal;
-    pthread_t hilo_monitoreo;
-    pthread_t hilo_comunicacion;
-} CentroComando;
+// Forward declaration - la estructura CentroComando ya está definida en common.h
 
 // Funciones de Creación del Centro de Comando
 CentroComando* crear_centro_comando(void);

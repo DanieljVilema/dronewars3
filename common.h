@@ -1,6 +1,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -96,12 +98,14 @@ typedef struct {
     int id_blanco;
     EstadoEnjambre estado;
     int num_drones;
+    int num_drones_activos;
     int num_drones_ataque;
     int num_drones_camara;
     Drone* drones[MAX_DRONES];
     Coordenada zona_ensamblaje;
     Coordenada posicion_blanco;
     pthread_mutex_t mutex_enjambre;
+    pthread_t hilo_control;
 } Enjambre;
 
 // Estructura del Blanco
@@ -124,6 +128,8 @@ typedef struct {
 
 // Estructura del Centro de Comando
 typedef struct {
+    int id;
+    int activo;
     int num_enjambres;
     int num_camiones;
     int num_blancos;
@@ -131,6 +137,9 @@ typedef struct {
     Camion* camiones[MAX_DRONES];
     Blanco* blancos[MAX_BLANCOS];
     pthread_mutex_t mutex_sistema;
+    pthread_t hilo_principal;
+    pthread_t hilo_monitoreo;
+    pthread_t hilo_comunicacion;
     int sistema_activo;
 } CentroComando;
 
@@ -150,6 +159,9 @@ int generar_probabilidad(int porcentaje);
 void sleep_ms(int milliseconds);
 void log_mensaje(const char* mensaje);
 void limpiar_pantalla(void);
+void inicializar_aleatorios(void);
+int esta_en_zona(Coordenada centro, int radio, Coordenada posicion);
+Coordenada mover_hacia_objetivo(Coordenada actual, Coordenada objetivo, int paso);
 
 // Funciones de Configuración
 int cargar_configuracion(const char* archivo);

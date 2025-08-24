@@ -4,20 +4,7 @@
 #include "common.h"
 #include "drone.h"
 
-// Estructura para el estado de un enjambre
-typedef struct {
-    int id_enjambre;
-    int id_blanco;
-    EstadoEnjambre estado;
-    int num_drones_activos;
-    int num_drones_ataque;
-    int num_drones_camara;
-    Drone* drones[MAX_DRONES];
-    Coordenada zona_ensamblaje;
-    Coordenada posicion_blanco;
-    pthread_mutex_t mutex_enjambre;
-    pthread_t hilo_control;
-} Enjambre;
+// Forward declaration - la estructura Enjambre ya está definida en common.h
 
 // Estructura para el control de enjambres
 typedef struct {
@@ -35,7 +22,7 @@ int inicializar_enjambre(Enjambre* enjambre);
 // Funciones de Gestión de Drones en Enjambres
 int agregar_drone_enjambre(Enjambre* enjambre, Drone* drone);
 int remover_drone_enjambre(Enjambre* enjambre, int id_drone);
-int verificar_ensamblaje_completo(Enjambre* enjambre);
+int verificar_ensamblaje_completo_enjambre(Enjambre* enjambre);
 int activar_enjambre(Enjambre* enjambre);
 
 // Funciones de Control de Enjambres
